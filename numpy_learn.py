@@ -156,16 +156,66 @@ for item in A.flat:
     print(item)
 '''
 
+'''
 #numpy array合并
 import numpy as np
+#np.vstack() vertical stack 上下合并
+#np.hstack() horizontal stack左右合并
 
 A = np.array([1,1,1])
 B = np.array([2,2,2])
 
-C = np.vstack((A,B))
-D = np.hstack((A,B))    #horizontal stack
-print(np.vstack((A,B))) #vertical stack 向下合并
+C = np.vstack((A,B))    
+D = np.hstack((A,B))    
+print("C:",C)
+print("D:",D)
 print(C.shape,D.shape)
-print(C)
-print(D)
 
+#无法使用转置将一个序列变成一个矩阵,无法改变行列矩阵
+print("A.T:",A.T)
+#np.newaxis指在对应行或者列上排列
+print(A[:,np.newaxis])
+C = A[:,np.newaxis]
+D = B[:,np.newaxis]
+E = np.hstack((C,D))
+print(E)
+
+#np.concatenate() 多个矩阵纵向或者横向的合并
+F = np.concatenate((C,D,C,D),axis = 1)
+print(F)
+'''
+'''
+#numpy array分割
+import numpy as np
+
+A = np.arange(12).reshape((3,4))
+print(A)
+
+#np.split() 对矩阵进行分割，axis = 1 对列操作，axis = 0 对行操作,必须进行等量分割
+print(np.split(A,2,axis = 1))
+print(np.split(A,3,axis = 0))
+#np.array_split() 可以进行不等量分割，但是似乎不可控哪些分割在一起
+print(np.array_split(A,3, axis = 1))
+#np.vsplit() 纵向分割
+#np.hsplit() 横向分割
+print(np.vsplit(A,3))
+print(np.hsplit(A,2))
+'''
+
+#numpy copy & deep copy
+import numpy as np
+a = np.arange(4)
+b = a
+c = a
+d = b
+a[0] = 4
+print(a)
+print(b,c,d)
+#在Python中赋值操作的变量是同一个变量，类似于c语言中的引用
+print(b is a,c is a,d is a)
+d[1:3] = [22,33]
+print(d,a)
+
+#a.copy() deep copy,将a的值赋给b，但是a，b没有关联
+b = a.copy()
+print(a is b)
